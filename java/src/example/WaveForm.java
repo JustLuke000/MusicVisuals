@@ -31,6 +31,7 @@ public class WaveForm
     float loadingX;
     float loadingY;
     int loadingTime = 400;
+    int zoomOut = 1;
 
     public void render()
     {
@@ -41,7 +42,7 @@ public class WaveForm
         mv.noFill();
         mv.lights();
         mv.stroke(PApplet.map(mv.getSmoothedAmplitude(), 1, 0, 255, 0), 255, 255);
-        mv.camera(0, 0, 1, 0, 0, -1, 0, 1, 0);
+        mv.camera(0, 0, zoomOut, 0, 0, -1, 0, 1, 0);
         mv.translate(0, 0, -250);
             
         float boxSize = 50 + (mv.getAmplitude() * 300);//map(average, 0, 1, 100, 400); 
@@ -85,22 +86,50 @@ public class WaveForm
                 mv.fill(255);
                 mv.text("Loading Visual...",-45,80);
         
+            
+        }
+        else
+        {
+            mv.rotateY(angle);
+            mv.rotateX(angle);
+
+                mv.pushMatrix();
+                    mv.sphere(10); 
+
+                    mv.pushMatrix();
+                    mv.rotateY(angle1);
+                    mv.rotateX(angle1);
+                    mv.strokeWeight(1); 
+                    mv.circle(0, 0, smoothedBoxSize - 10);
+                    mv.popMatrix();
+
+
+                    mv.pushMatrix();
+                    mv.rotateY(angle2);
+                    mv.rotateX(angle2);
+                    mv.strokeWeight(1); 
+                    mv.circle(0, 0, smoothedBoxSize);
+                    mv.popMatrix();
+
+                    mv.pushMatrix();
+                    mv.rotateY(angle3);
+                    mv.rotateX(angle3);
+                    mv.strokeWeight(1); 
+                    mv.circle(0, 0, smoothedBoxSize + 10);
+                    mv.popMatrix();
+                mv.popMatrix();
+
+                mv.pushMatrix();
+                    mv.sphere(800); 
+                mv.popMatrix();
+        }
+        
             //scaler += 1;
             angle += 0.01f;
             angle1 -= 0.01f;
             angle2 += 0.02f;
             angle3 += 0.005f;
             update();
-        }
-        else
-        {
-            mv.pushMatrix();
-            mv.rotateX(angle);
-            mv.rotateZ(angle);       
-            mv.box(smoothedBoxSize);  
-            mv.popMatrix();
-            angle += 0.01f;
-        }
     }
 
     public void update()
@@ -110,6 +139,10 @@ public class WaveForm
             loadingX = mv.map(k, 0, loadingTime, -200, 200);
             loadingY = 50;
             k += 1;
+        }
+        else
+        {
+            zoomOut += 1;
         }
            
     }
