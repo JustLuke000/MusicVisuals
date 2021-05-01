@@ -2,13 +2,20 @@ package example;
 
 import ie.tudublin.Visual;
 
+
 public class CubeVisual1 extends Visual
 {
+
+    MyVisual myVisual;
+    public CubeVisual1(MyVisual myVisual) {
+    }
+
     public void settings()
     {
         size(800, 600, P3D);
         //fullScreen(P3D, SPAN);
     }
+
 
     public void setup()
     {
@@ -31,7 +38,7 @@ public class CubeVisual1 extends Visual
 
     public void draw()
     {
-        background(0);
+        //background(0);
         calculateAverageAmplitude();
         stroke(map(getSmoothedAmplitude(), 0, 1, 0, 255), 255, 255);
         strokeWeight(5);

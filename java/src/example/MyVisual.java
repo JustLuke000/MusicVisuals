@@ -9,7 +9,7 @@ public class MyVisual extends Visual
 
     public void settings()
     {
-        size(1024, 500);
+        size(1024, 500, P3D);
         
         // Use this to make fullscreen
         //fullScreen();
@@ -23,7 +23,7 @@ public class MyVisual extends Visual
         startMinim();
                 
         // Call loadAudio to load an audio file to process 
-        loadAudio("heroplanet.mp3");   
+        loadAudio("alliwant.mp3");   
 
         
         // Call this instead to read audio from the microphone
@@ -60,6 +60,6 @@ public class MyVisual extends Visual
         // Call this is you want to get the average amplitude
         calculateAverageAmplitude();        
         wf.render();
-        abv.render();
+        //abv.render();
     }
 }
