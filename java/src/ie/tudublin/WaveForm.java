@@ -1,12 +1,7 @@
 package ie.tudublin;
 
-import java.util.concurrent.CyclicBarrier;
-
-import javax.swing.Box;
-
 import processing.core.PApplet;
 
-// This is an example of a visual that renders the waveform
 public class WaveForm
 {
     MyVisual mv;
@@ -18,34 +13,32 @@ public class WaveForm
         cy = this.mv.height / 2;
     }
 
-    float angle = 0;
-    float angle1 = 0;
-    float angle2 = 0;
-    float angle3 = 0;
-    int scaler = 0;
-    float smoothedBoxSize = 0;
-    boolean twocubes = false;
-    long startMillis = System.currentTimeMillis();
-    long endMillis = startMillis + 10000;
-    int k = 0;
-    float loadingX;
-    float loadingY;
-    int loadingTime = 400;
-    int zoomOut = 1;
+    private float angle = 0;
+    private float angle1 = 0;
+    private float angle2 = 0;
+    private float angle3 = 0;
+
+    private float smoothedBoxSize = 0;
+    private float loadingX;
+
+    private int loadingTime = 400;
+    private int zoomOut = 1;
+    private int k = 0;
 
     public void render()
     {
-
+        mv.camera(0, 0, zoomOut, 0, 0, -1, 0, 1, 0);
         mv.colorMode(PApplet.HSB);
-        mv.calculateAverageAmplitude();
         mv.background(0);
         mv.noFill();
         mv.lights();
+
+        mv.calculateAverageAmplitude();
         mv.stroke(PApplet.map(mv.getSmoothedAmplitude(), 1, 0, 255, 0), 255, 255);
-        mv.camera(0, 0, zoomOut, 0, 0, -1, 0, 1, 0);
+        
         mv.translate(0, 0, -250);
             
-        float boxSize = 50 + (mv.getAmplitude() * 300);//map(average, 0, 1, 100, 400); 
+        float boxSize = 50 + (mv.getAmplitude() * 300);
         smoothedBoxSize = PApplet.lerp(smoothedBoxSize, boxSize, 0.2f);
 
         if(k <= loadingTime)
@@ -124,12 +117,12 @@ public class WaveForm
                 mv.popMatrix();
         }
         
-            //scaler += 1;
-            angle += 0.01f;
-            angle1 -= 0.01f;
-            angle2 += 0.02f;
-            angle3 += 0.005f;
-            update();
+        angle += 0.01f;
+        angle1 -= 0.01f;
+        angle2 += 0.02f;
+        angle3 += 0.005f;
+        update();
+
     }
 
     public void update()
@@ -137,7 +130,6 @@ public class WaveForm
         if (k <= loadingTime)
         {
             loadingX = mv.map(k, 0, loadingTime, -200, 200);
-            loadingY = 50;
             k += 1;
         }
         else
