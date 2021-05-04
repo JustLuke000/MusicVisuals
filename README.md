@@ -1,5 +1,6 @@
 # Music Visualiser Project
 Name: Luke O'Shea Scanlan
+
 Student Number: C19300696
 
 # Description of the assignment
@@ -37,5 +38,5 @@ Theses are some of the prototypes I worked with but didn't end up including:
 
 ![An image](images/boxes.png)
 
-It seems that my repository was also clone which is a shame:
+It seems that my repository was also cloned which is a shame:
 ![An image](images/cloned.png)
