@@ -28,7 +28,7 @@ public class WaveForm
     public void render()
     {
         mv.camera(0, 0, zoomOut, 0, 0, -1, 0, 1, 0);
-        mv.colorMode(PApplet.HSB);
+        mv.colorMode(3);
         mv.background(0);
         mv.noFill();
         mv.lights();
@@ -40,6 +40,8 @@ public class WaveForm
             
         float boxSize = 50 + (mv.getAmplitude() * 300);
         smoothedBoxSize = PApplet.lerp(smoothedBoxSize, boxSize, 0.2f);
+        //k = 10000;
+
 
         if(k <= loadingTime)
         {
@@ -83,9 +85,12 @@ public class WaveForm
         }
         else
         {
-            mv.rotateY(angle);
-            mv.rotateX(angle);
+            if (zoomOut > -100)
+            {
+                mv.rotateY(angle);
+                mv.rotateX(angle);
 
+                // Atom
                 mv.pushMatrix();
                     mv.sphere(10); 
 
@@ -112,12 +117,39 @@ public class WaveForm
                     mv.popMatrix();
                 mv.popMatrix();
 
+                // Larger Sphere
                 mv.pushMatrix();
                     mv.sphere(800); 
                 mv.popMatrix();
+            }
+            else
+            {
+                mv.camera();
+
+
+                mv.pushMatrix();
+                mv.translate(mv.width/2, mv.height/2);
+                for(int i = 0 ; i < mv.getAudioBuffer().size(); i ++)
+                {
+                    mv.stroke(PApplet.map(i, 0, mv.getAudioBuffer().size(), 0, 255), 255, 255);
+                    
+                    mv.rotate(angle);
+                    mv.pushMatrix();
+                        mv.line(i, cy - mv.height / 2, i, cy + cy * mv.getAudioBuffer().get(i) - mv.height / 2);
+                        mv.rotate(angle2);
+                        mv.line(i, cy - mv.height / 2, i, cy + cy * mv.getAudioBuffer().get(i) - mv.height / 2);
+                        mv.rotate(angle3);
+                        mv.line(i, cy - mv.height / 2, i, cy + cy * mv.getAudioBuffer().get(i) - mv.height / 2);
+                    mv.popMatrix();
+                    
+                    mv.circle(0, 0, smoothedBoxSize / 2);
+                }
+                mv.popMatrix();
+
+            }
         }
         
-        angle += 0.01f;
+        angle += 0.001f;
         angle1 -= 0.01f;
         angle2 += 0.02f;
         angle3 += 0.005f;
@@ -129,12 +161,25 @@ public class WaveForm
     {
         if (k <= loadingTime)
         {
-            loadingX = mv.map(k, 0, loadingTime, -200, 200);
+            loadingX = PApplet.map(k, 0, loadingTime, -200, 200);
             k += 1;
         }
         else
         {
-            zoomOut += 1;
+            if ( k <= 3.5 * loadingTime)
+            {
+                zoomOut += 6;
+                k += 2;
+            }
+            else
+            {
+                if (zoomOut > -100)
+                {
+                    zoomOut -= 15;
+                }
+                
+            }
+            
         }
            
     }

@@ -6,8 +6,8 @@ import ddf.minim.analysis.FFT;
 
 public abstract class Visual extends PApplet
 {
-	private int frameSize = 512;
-	private int sampleRate = 44100;
+	private int frameSize = 1024;
+	private int sampleRate = 48000;
 
 	private float[] bands;
 	private float[] smoothedBands;
