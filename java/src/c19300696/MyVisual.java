@@ -1,4 +1,6 @@
-package ie.tudublin;
+package c19300696;
+
+import ie.tudublin.Visual;
 
 public class MyVisual extends Visual
 {    

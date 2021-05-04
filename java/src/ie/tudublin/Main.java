@@ -1,6 +1,8 @@
 package ie.tudublin;
 
-public class Main
+import c19300696.*
+
+;public class Main
 {	
 
 	public void startVisualization()
